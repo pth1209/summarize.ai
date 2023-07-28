@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const Summarizer = () => {
   const [article, setArticle] = useState({
@@ -6,8 +7,29 @@ const Summarizer = () => {
     "summary":  ""
   });
 
-  const handleSubmit = () => {
-    alert("Submitted!")
+  const options = {
+    method: "GET",
+    url: "https://article-extractor-and-summarizer.p.rapidapi.com/summarize",
+    params: {
+      url: article.url,
+      length: "3"
+    },
+    headers: {
+      'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
+      "X-RapidAPI-Host": "article-extractor-and-summarizer.p.rapidapi.com",
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    alert("Submitted!");
+    e.preventDefault();
+
+    try {
+      const response = await axios.request(options);
+      setArticle({...article, summary: response.data})
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -26,7 +48,6 @@ const Summarizer = () => {
             </input>
             <button type = "submit" className = "submit_button">Click me!</button>
         </form>
-        {/* Display browing history */}
       </div>
         {/* Display results of the summarizer */}
     </section>
