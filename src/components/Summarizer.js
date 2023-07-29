@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 const Summarizer = () => {
   const [article, setArticle] = useState({
     "url": "",
@@ -20,6 +21,10 @@ const Summarizer = () => {
       'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
       "X-RapidAPI-Host": "article-extractor-and-summarizer.p.rapidapi.com",
     }
+  }
+
+  const replaceWithBr = (summary) => {
+    return summary.replace(/\n/g, "<br />")
   }
 
   const handleSubmit = async (e) => {
@@ -56,10 +61,10 @@ const Summarizer = () => {
             article.summary !== "" ? (
               <div className="summary_box">
                 <h2 className = "relative flex justify-start items-center font-bold">Summary:</h2>
-                <p className = "mt-15">{article.summary}</p>
+                <p dangerouslySetInnerHTML={{__html: replaceWithBr(article.summary)}} />
               </div>
             ) : (
-              <h2>Writing Summary ... </h2>
+              <h2 className = "justify-center">Writing Summary ... </h2>
             )
           ) : ""}
       </div>

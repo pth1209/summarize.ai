@@ -7,15 +7,14 @@ const Header = () => {
         <h3 className = "font-bold font">summarize.ai</h3>
         <button 
         type = "button"
-        //enter github link soon
-        onClick = {() => window.open("")} className = "button">
+        onClick = {() => window.open("https://github.com/pth1209/summarize.ai.git")} className = "button">
           Github
         </button>
       </nav>
 
       <h1 className = "title">
         Summarize Quickly with <br />
-        <span className = "text_gradient">GPT-4 Model</span>
+        <span className = "text_gradient">OpenAI GPT</span>
       </h1>
       <h2 className = "subtitle">
         Summarize lengthy articles into easily-readable paragraphs with summarize.ai!
