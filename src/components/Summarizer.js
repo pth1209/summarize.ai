@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import SyncLoader from "react-spinners/SyncLoader";
 
 
 const Summarizer = () => {
@@ -7,6 +8,8 @@ const Summarizer = () => {
     "url": "",
     "summary":  ""
   });
+
+  const [loading, setLoading] = useState(false);
 
   const [buttonSubmitted, setButtonSubmitted] = useState(false);
 
@@ -31,10 +34,14 @@ const Summarizer = () => {
     alert("Submitted!");
     e.preventDefault();
     setButtonSubmitted(true);
+    article.summary = "";
+
+    setLoading(true);
 
     try {
       const response = await axios.request(options);
       setArticle({...article, summary: response.data.summary});
+      setLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -64,7 +71,12 @@ const Summarizer = () => {
                 <p dangerouslySetInnerHTML={{__html: replaceWithBr(article.summary)}} />
               </div>
             ) : (
-              <h2 className = "justify-center">Writing Summary ... </h2>
+              <div className = "loader m">
+                <SyncLoader
+                  color="aqua"
+                  loading = {loading}
+                />
+              </div>
             )
           ) : ""}
       </div>
